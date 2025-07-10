@@ -146,7 +146,7 @@ STATICFILES_DIRS=[
    
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
