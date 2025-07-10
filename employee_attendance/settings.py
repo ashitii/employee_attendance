@@ -24,7 +24,11 @@ SECRET_KEY = 'django-insecure-8zb32o2g*rh(7-i+s7+3ipps68el=l-ip21&%po_satpv36kap
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['*']  #paste your domain name here    
+ALLOWED_HOSTS = [
+    'employee-attendance-fyab.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -168,3 +172,6 @@ LOGIN_REDIRECT_URL = 'employee_dashboard'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://employee-attendance-fyab.onrender.com',
+]
