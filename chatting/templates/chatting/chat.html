@@ -485,7 +485,7 @@
       chatBox.innerHTML = '';
 
       // Initialize new WebSocket
-      socket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + selectedUserId + '/');
+      socket = new WebSocket('wss://' + window.location.host + '/ws/chat/' + selectedUserId + '/');
 
       socket.onmessage = e => {
         const data = JSON.parse(e.data);
