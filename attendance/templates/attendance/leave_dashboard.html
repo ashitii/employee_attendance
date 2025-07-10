@@ -1,0 +1,157 @@
+{% extends 'attendance/base.html' %}
+
+{% block title %}
+  Leave Management
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid mt-4 p-2 p-md-4">
+    <!-- Bootstrap Nav Tabs -->
+    <ul class="nav nav-tabs mb-4 flex-wrap" id="leaveTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="apply-tab" data-bs-toggle="tab" data-bs-target="#apply" type="button" role="tab">Apply for Leave</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="sick-tab" data-bs-toggle="tab" data-bs-target="#sick" type="button" role="tab">My Sick Leaves</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="casual-tab" data-bs-toggle="tab" data-bs-target="#casual" type="button" role="tab">My Casual Leaves</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="wfh-tab" data-bs-toggle="tab" data-bs-target="#wfh" type="button" role="tab">Work from Home</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="leaveTabsContent">
+      <!-- Apply for Leave Tab -->
+      <div class="tab-pane fade show active" id="apply" role="tabpanel">
+        <h4>Apply for Leave/WFH</h4>
+        <form method="POST" action="{% url 'leave_dashboard' %}" class="row g-3">
+          {% csrf_token %}
+          <div class="col-12 col-md-6 col-lg-4 mb-3">
+            <label>Start Date:</label>
+            <input type="date" name="start_date" class="form-control" required />
+          </div>
+          <div class="col-12 col-md-6 col-lg-4 mb-3">
+            <label>End Date:</label>
+            <input type="date" name="end_date" class="form-control" required />
+          </div>
+          <div class="col-12 col-md-6 col-lg-4 mb-3">
+            <label>Leave Type:</label>
+            <select name="leave_type" class="form-control" required>
+              <option value="">-- Select Leave Type --</option>
+              {% for lt in leave_types %}
+                <option value="{{ lt }}">{{ lt }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-12 mb-3">
+            <label>Reason:</label>
+            <textarea name="reason" class="form-control" required></textarea>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Sick Leaves Tab -->
+      <div class="tab-pane fade" id="sick" role="tabpanel">
+        <h4>My Sick Leaves</h4>
+        <div class="leave-badge-container p-2">
+          <span class="leave-badge used">{{ sick_leaves_used }} used</span>
+          <span class="leave-badge remaining">{{ sick_leaves_remaining }} remaining out of 12</span>
+        </div>
+
+        <div class="table-responsive shadow" style="max-height: 350px; overflow-y: auto;">
+          <table class="table table-striped table-bordered align-middle text-nowrap mb-0 rounded-3 overflow-hidden">
+            <thead class="table-light">
+              <tr>
+                <th>Start</th>
+                <th>End</th>
+                <th>Reason</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for leave in sick_leaves %}
+                <tr>
+                  <td>{{ leave.start_date }}</td>
+                  <td>{{ leave.end_date }}</td>
+                  <td>{{ leave.reason }}</td>
+                  <td>{{ leave.status }}</td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="4">No sick leaves found.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Casual Leaves Tab -->
+      <div class="tab-pane fade" id="casual" role="tabpanel">
+        <h4>My Casual Leaves</h4>
+        <div class="table-responsive shadow" style="max-height: 350px; overflow-y: auto;">
+          <table class="table table-striped table-bordered align-middle text-nowrap mb-0 rounded-3 overflow-hidden">
+            <thead class="table-light">
+              <tr>
+                <th>Start</th>
+                <th>End</th>
+                <th>Reason</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for leave in casual_leaves %}
+                <tr>
+                  <td>{{ leave.start_date }}</td>
+                  <td>{{ leave.end_date }}</td>
+                  <td>{{ leave.reason }}</td>
+                  <td>{{ leave.status }}</td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="4">No casual leaves found.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Work from Home Tab -->
+      <div class="tab-pane fade" id="wfh" role="tabpanel">
+        <h4>My Work from Home</h4>
+        <div class="table-responsive shadow" style="max-height: 350px; overflow-y: auto;">
+          <table class="table table-striped table-bordered align-middle text-nowrap mb-0 rounded-3 overflow-hidden">
+            <thead class="table-light">
+              <tr>
+                <th>Start</th>
+                <th>End</th>
+                <th>Reason</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for leave in work_from_home %}
+                <tr>
+                  <td>{{ leave.start_date }}</td>
+                  <td>{{ leave.end_date }}</td>
+                  <td>{{ leave.reason }}</td>
+                  <td>{{ leave.status }}</td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="4">No WFH records found.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

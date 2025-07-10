@@ -1,0 +1,119 @@
+/* Core colors
+:root {
+  --primary-dark: #0e0e52;
+  --primary-bg: #f8f9fc;
+  --gray-light: #e9ecef;
+}
+
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--primary-bg);
+}
+
+.btn-primary-dark {
+  background-color: var(--primary-dark);
+  color: #fff;
+}
+.btn-primary-dark:hover {
+  background-color: #e9ecef;
+}
+.btn-secondary-light {
+  background-color: #e1e6f5;
+  color: #000;
+}
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+
+.custom-scroll {
+  overflow-x: auto;
+  overflow-y: hidden !important;
+}
+.custom-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: var(--primary-dark);
+  border-radius: 4px;
+}
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #0b0b45;
+}
+
+
+@media screen and (max-width: 1024px) {
+  .custom-scroll {
+    width: 100vw;
+    max-width: 100vw;
+    overflow-x: auto;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  table {
+    min-width: 700px;
+    font-size: 0.96rem;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .custom-scroll {
+    width: 100vw;
+    max-width: 100vw;
+    overflow-x: auto;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  table {
+    min-width: 500px;
+    font-size: 0.92rem;
+    width: 100%;
+  }
+  th, td {
+    font-size: 0.92rem;
+    min-width: 90px;
+    word-break: break-word;
+  }
+  .form-control, .btn {
+    width: 100%;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .custom-scroll {
+    width: 100vw;
+    max-width: 100vw;
+    overflow-x: auto;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  table {
+    min-width: 320px;
+    font-size: 0.89rem;
+    width: 100%;
+  }
+  th, td {
+    font-size: 0.89rem;
+    min-width: 70px;
+    word-break: break-word;
+  }
+  .form-control, .btn {
+    width: 100%;
+    margin-top: 0.4rem;
+    font-size: 0.92rem;
+    padding: 0.3rem 0.6rem;
+  }
+} */

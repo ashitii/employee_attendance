@@ -1,0 +1,40 @@
+<!-- upload_card.html -->
+
+{% extends 'attendance/base.html' %}
+{% block title %}
+  Upload Birthday Card
+{% endblock %}
+
+{% block content %}
+  {% load widget_tweaks %}
+  <div class="container mt-5">
+    {% if messages %}
+      {% for message in messages %}
+        <div id="alertMessage" class="alert alert-success" role="alert">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <div class="container mt-5 ">
+      <h3 class="mb-4" >Upload PDF for {{ birthday_user.get_full_name }}</h3>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="id_pdf" class="form-label">Birthday PDF</label>
+          {{ form.pdf|add_class:'form-control' }}
+        </div>
+        <button type="submit" class="btn btn-success" >Upload</button>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-danger">Cancel</a>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Auto-hide success message after 3 seconds
+    setTimeout(function () {
+      const alert = document.getElementById('alertMessage')
+      if (alert) {
+        alert.style.display = 'none'
+      }
+    }, 3000)
+  </script>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'attendance/base.html' %}
+
+{% block title %}
+  Manager Dashboard
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-2 p-2">
+
+  <div class="d-flex justify-content-between align-items-center p-4">
+    <h2>Hello, {{ request.user.first_name|default:'User' }} 👋</h2>
+  </div>
+  <hr /> {# Moved hr outside the div for better separation #}
+  <div class="mb-4">
+    <a href="{% url 'clock_in' %}" class="btn btn-clock-in me-3"><i class="bi bi-play-circle-fill me-1"></i> Clock In</a>
+    <a href="{% url 'clock_out' %}" class="btn btn-clock-out"><i class="bi bi-stop-circle-fill me-1"></i> Clock Out</a>
+  </div>
+
+  {# REMOVED: <a href="{% url 'apply_leave' %}" class="btn btn-primary mb-3">Apply for Leave</a> #}
+  {% comment %} <a href="{% url 'logout' %}" class="btn btn-danger mb-3">Logout</a> {% endcomment %}
+  <div class="card mb-4">
+    <div class="card-header text-white d-flex align-items-center rounded-top-3">
+      <span style="font-size: 1.3rem;">📢 <strong>Company Notices</strong></span>
+    </div>
+    <div class="card-body sticky-board" style="background-color: #cad6ef;">
+      {% if notices %}
+        <div class="note-grid">
+          {% for notice in notices %}
+            <div class="sticky-note {% cycle 'note-color-1' 'note-color-2' 'note-color-3' 'note-color-4' %}">
+              <div class="note-title">{{ notice.title }}</div>
+              <div class="note-content">{{ notice.description }}</div>
+              <div class="note-date">{{ notice.created_at|date:'M d, Y' }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-muted">No active notices at the moment.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <h4 class="mb-3 p-2">Your Attendance Records</h4>
+
+  <div class="table-responsive">
+    <table class="table-shadow table table-bordered table-striped align-middle text-nowrap">
+      <thead class="table-light">
+        <tr>
+          <th>Date</th>
+          <th>Clock In</th>
+          <th>Clock Out</th>
+          <th>Total Working Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in attendance_records %}
+          <tr>
+            <td>{{ record.date }}</td>
+            <td>{{ record.clock_in|date:'H:i:s' }}</td>
+            <td>
+              {% if record.clock_out %}
+                {{ record.clock_out|date:'H:i:s' }}
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td>{{ record.total_working_hours }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4">No attendance records yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <!-- Pagination -->
+  {% if attendance_records.has_other_pages %}
+  <nav class="mt-3" aria-label="Attendance pagination">
+    <ul class="pagination justify-content-center flex-wrap">
+      {% if attendance_records.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ attendance_records.previous_page_number }}">Previous</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Previous</span></li>
+      {% endif %}
+      {% for num in attendance_records.paginator.page_range %}
+        {% if attendance_records.number == num %}
+          <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if attendance_records.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ attendance_records.next_page_number }}">Next</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Next</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+  </div>
+{% endblock %}

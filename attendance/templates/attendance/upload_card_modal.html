@@ -1,0 +1,24 @@
+<!-- Upload Birthday Card Modal (Bootstrap) -->
+<div class="modal fade" id="uploadCardModal" tabindex="-1" aria-labelledby="uploadCardModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header text-white" style="background-color: #0e0e52; color:white">
+        <h5 class="modal-title" id="uploadCardModalLabel"><i class="bi bi-upload me-2"></i>Upload Birthday Card</h5>
+        <button type="button" class="btn-close white-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+      </div>
+      <form id="uploadCardForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="id_pdf" class="form-label fw-semibold">Birthday Card PDF</label>
+            <input type="file" name="pdf" id="id_pdf" class="form-control" accept="application/pdf" required />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

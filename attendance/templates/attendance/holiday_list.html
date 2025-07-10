@@ -1,0 +1,75 @@
+{% extends 'attendance/base.html' %}
+{% block title %}
+  Holiday List
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid m-4 p-4 ">
+    <h3>Holiday List</h3>
+    {% if request.user.groups.first.name == "Admin" %}
+    <button class="btn mb-3" style="background-color: #0e0e52; color:white" data-bs-toggle="modal" data-bs-target="#addHolidayModal">Add Holiday</button>
+    {% endif %}
+    {% comment %} <div class="table-responsive shadow " style="max-height: 350px; overflow-y: auto;"> {% endcomment %}
+<table class="table-shadow table table-bordered table-striped align-middle text-nowrap">
+        <thead class="table-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for holiday in holidays %}
+                <tr>
+                    <td>{{ holiday.title }}</td>
+                    <td>{{ holiday.date }}</td>
+                    <td>{{ holiday.holiday_type }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3">No holidays found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add Holiday Modal -->
+<div class="modal fade" id="addHolidayModal" tabindex="-1" aria-labelledby="addHolidayModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{% url 'add_holiday' %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="addHolidayModalLabel">Add Holiday</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="holidayTitle" class="form-label">Title</label>
+            <input type="text" class="form-control" id="holidayTitle" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label for="holidayDate" class="form-label">Date</label>
+            <input type="date" class="form-control" id="holidayDate" name="date" required>
+          </div>
+          <div class="mb-3">
+            <label for="holidayType" class="form-label">Type</label>
+            <select class="form-control" id="holidayType" name="holiday_type" required>
+              <option value="">-- Select Type --</option>
+              <option value="Public">Public Holiday</option>
+              <option value="Company">Company Holiday</option>
+              <option value="National">National Holiday</option>
+              <option value="Festival">Festival Holiday</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success" >Add Holiday</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
